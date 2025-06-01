@@ -1,13 +1,16 @@
 import express from 'express'
-import Router from './router/usuarioRouter.js' 
+import UsuarioRouter from './router/usuarioRouter.js' 
+import CartaRouter from './router/cartaRouter.js'
 
 
 class Server{
     #port
-    #persistencia
-    constructor (port, persistencia){
+    #persistenciaCartas
+    #persistenciaUsuarios
+    constructor (port, persistenciaCartas, persistenciaUsuarios){
         this.#port=port
-        this.#persistencia=persistencia
+        this.#persistenciaCartas=persistenciaCartas
+        this.#persistenciaUsuarios=persistenciaUsuarios
     }
 start(){
 const app= express()
@@ -18,7 +21,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 //--------------API RESTful de Productos-------es lo que pone en uso la carpeta vista----------------
-app.use('/api/usuarios', new Router(this.#persistencia).start())
+app.use('/api/usuarios', new UsuarioRouter(this.#persistenciaUsuarios).start())
+app.use('/api/cartas', new CartaRouter(this.#persistenciaCartas).start())
 
 //------------------ SECTOR LISTEN--------------------------
 const port = this.#port 

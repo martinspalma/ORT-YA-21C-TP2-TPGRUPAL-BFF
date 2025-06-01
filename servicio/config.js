@@ -2,8 +2,11 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const MODO_PERSISTENCIA =process.env.MODO_PERSISTENCIA //process.env.MODO_PERSISTENCIA
+const MODO_PERSISTENCIA_USUARIOS=process.env.MODO_PERSISTENCIA_USUARIOS 
+const MODO_PERSISTENCIA_CARTAS=process.env.MODO_PERSISTENCIA_CARTAS 
+
+//const MODO_PERSISTENCIA =process.env.MODO_PERSISTENCIA //process.env.MODO_PERSISTENCIA
 const PORT = process.env.PORT || 8080
 
 
-export default { PORT, MODO_PERSISTENCIA }
+export default { PORT, MODO_PERSISTENCIA_CARTAS, MODO_PERSISTENCIA_USUARIOS }

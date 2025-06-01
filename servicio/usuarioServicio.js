@@ -3,9 +3,10 @@ import { validar, validarActualizacion } from './validaciones/usuarios.js'
 
 
 class Servicio {
+   
     #model
     constructor(persistencia) {
-        this.#model = ModelFactory.get(persistencia)
+        this.#model = ModelFactory.get(persistencia, 'usuarios')
 
     }
 

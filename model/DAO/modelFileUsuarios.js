@@ -1,53 +1,42 @@
-import fs from 'fs'
+import ArchivoPersistencia from './archivoPersistencia.js'
 
-class ModelFile {
-    #usuarios
+class ModelFileUsuarios extends ArchivoPersistencia{
+    #usuarios= 'usuarios.json'
 
     constructor() {
 
-        this.#usuarios = 'usuarios.json'
+        super('usuarios.json')
     }
 
-    #leerArchivoUsuarios = async ruta => {
-        let archivo = []
-        try {
-            archivo = JSON.parse(await fs.promises.readFile(ruta, 'utf-8'))
-        } catch { }
-        return archivo
-    }
 
-    #escribirArchivoUsuarios = async (ruta, texto) => {
-        await fs.promises.writeFile(ruta, JSON.stringify(texto, null, '\t'))
-    }
-//-----------------------------------------------------------------------
     obtenerUsuario = async (id) => {
 
-        const usuarios = await this.#leerArchivoUsuarios(this.#usuarios)
+        const usuarios = await this.leer()
         const usuarioBuscado = usuarios.find(u => u.id === id)
         return usuarioBuscado || {}
     }
 
     obtenerUsuarios = async () => {
-        return await this.#leerArchivoUsuarios(this.#usuarios) || {}
+        return await this.leer() || {}
     }
 
     guardarUsuarios = async (usuario) => {
-        const usuarios = await this.#leerArchivoUsuarios(this.#usuarios)
+        const usuarios = await this.leer()
         usuario.id = String(parseInt(usuarios[usuarios.length - 1]?.id || 0) + 1)
         usuarios.push(usuario)
-        await this.#escribirArchivoUsuarios(this.#usuarios, usuarios)
+        await this.escribir(usuarios)
         return usuario
     }
 
     actualizarUsuarios = async (id, usuario) => {
-        const usuarios = await this.#leerArchivoUsuarios(this.#usuarios)
+        const usuarios = await this.leer()
         const index = usuarios.findIndex(u => u.id === id)
 
         if (index != -1) {
             const usuarioAnterior = usuarios[index]
             const usuarioActualizado = { ...usuarioAnterior, ...usuario }
             usuarios.splice(index, 1, usuarioActualizado)
-            await this.#escribirArchivoUsuarios(this.#usuarios, usuarios)
+            await this.escribir(usuarios)
             return usuarioActualizado
         }
         else {
@@ -57,12 +46,12 @@ class ModelFile {
     }
 
     borrarUsuarios = async (id) => {
-        const usuarios = await this.#leerArchivoUsuarios(this.#usuarios)
+        const usuarios = await this.leer()
         const index = usuarios.findIndex(u => u.id === id)
 
         if (index != -1) {
             const usuarioEliminado = usuarios.splice(index, 1)[0]
-            await this.#escribirArchivoUsuarios(this.#usuarios, usuarios)
+            await this.escribir(usuarios)
             return usuarioEliminado
         }
         else {
@@ -73,4 +62,4 @@ class ModelFile {
 
 
 }
-export default ModelFile 
+export default ModelFileUsuarios 

@@ -1,7 +1,7 @@
 import express from 'express'
 import Controlador from '../controlador/usuarioController.js'
 
-class Router {
+class UsuarioRouter {
     #cb = null
     constructor(persistencia) {
         this.#cb = new Controlador(persistencia)
@@ -24,4 +24,4 @@ class Router {
         return router
     }
 }
-export default Router
+export default UsuarioRouter
