@@ -16,5 +16,17 @@ Contraseñia<br><input type="text" name="contrasenia"><br>
 <br>
 <button>Enviar</button>
 </form>
+<hr>
+<h2>Iniciar Sesión</h2>
+    <form action="/api/usuarios/login" method="post">
+        Nombre de Usuario<br>
+        <input type="text" name="usuario" required><br><br>
+
+        Contraseña<br>
+        <input type="password" name="contrasenia" required><br><br>
+
+        <button type="submit">Ingresar</button>
+    </form>
+
 </body>
 </html>

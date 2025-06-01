@@ -13,6 +13,7 @@ class Router {
         router.get('/:id?', this.#cb.obtenerUsuarios)
         //POST
         router.post('/', this.#cb.guardarUsuarios)
+        router.post('/login', this.#cb.loginUsuario)
         //PUT
         router.put('/:id', this.#cb.actualizarUsuarios)
         //DELETE

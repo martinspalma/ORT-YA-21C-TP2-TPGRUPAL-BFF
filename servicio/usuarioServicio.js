@@ -9,7 +9,6 @@ class Servicio {
 
     }
 
-
     obtenerUsuarios = async (id) => {
         if (id) {
             const usuario = await this.#model.obtenerUsuario(id)
@@ -20,10 +19,8 @@ class Servicio {
         }
     }
 
-    guardarUsuarios = async (usuario) => {
-       
-        console.log(usuario.fechaNac)
-
+    guardarUsuarios = async (usuario) => {   
+        
         const val = validar(usuario)
         if (val.result) {
             const usuarioNuevo = await this.#model.guardarUsuarios(usuario)
@@ -33,7 +30,6 @@ class Servicio {
             throw new Error(val.error.details[0].message)
         }
     }
-
 
     actualizarUsuarios = async (id, usuario) => {
         const val = validarActualizacion(usuario)
@@ -46,13 +42,27 @@ class Servicio {
         }
     }
 
-
     borrarUsuarios = async (id) => {
         const eliminado = await this.#model.borrarUsuarios(id)
 
         return eliminado
     }
+loginUsuario = async (usuarioIngresado, contraseniaIngresada) => {
+    const usuarios = await this.#model.obtenerUsuarios()
 
+    const usuarioEncontrado = usuarios.find(u => u.usuario === usuarioIngresado)
+
+    if (!usuarioEncontrado) {
+        throw new Error('Usuario no encontrado')
+    }
+
+    if (usuarioEncontrado.contrasenia !== contraseniaIngresada) {
+        throw new Error('Contraseña incorrecta')
+    }
+
+    const { contrasenia, ...datosPublicos } = usuarioEncontrado
+    return datosPublicos
+}
 
 
 }
