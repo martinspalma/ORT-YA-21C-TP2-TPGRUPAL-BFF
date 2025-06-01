@@ -1,5 +1,5 @@
 import ModelMem from './modelMem.js'
-import ModelMongoDB from './modelMongoDB.js'
+import ModelFile from './modelFile.js'
 
 class ModelFactory {
 
@@ -9,9 +9,9 @@ class ModelFactory {
                 console.log('******* Persiste en Memoria***********')
                 return new ModelMem()
 
-            case 'MongoDB':
-                console.log('******* Persiste en MONGODB***********')
-                return new ModelMongoDB()
+            case 'FILE':
+                console.log('******* Persiste en File***********')
+                return new ModelFile()
 
             default:
                 console.log('******* Persiste por default en Memoria***********')

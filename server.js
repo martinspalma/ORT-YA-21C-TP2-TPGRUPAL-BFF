@@ -1,6 +1,6 @@
 import express from 'express'
-import Router from './router/jugadorRouter.js' 
-import config from './servicio/config.js'
+import Router from './router/usuarioRouter.js' 
+
 
 class Server{
     #port
@@ -18,7 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 //--------------API RESTful de Productos-------es lo que pone en uso la carpeta vista----------------
-app.use('/zor/jugadores', new Router(this.#persistencia).start())
+app.use('/api/usuarios', new Router(this.#persistencia).start())
 
 //------------------ SECTOR LISTEN--------------------------
 const port = this.#port 

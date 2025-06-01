@@ -1,0 +1,16 @@
+[
+	{
+		"usuario": "Pedernera",
+		"email": "emailModificado@gmail.com",
+		"fechaNac": "2025-05-06",
+		"contrasenia": "1234Fg$$",
+		"id": "1"
+	},
+	{
+		"usuario": "luciano",
+		"email": "lp@yahoo.com",
+		"fechaNac": "2025-05-06",
+		"contrasenia": "4456Lp&&",
+		"id": "3"
+	}
+]

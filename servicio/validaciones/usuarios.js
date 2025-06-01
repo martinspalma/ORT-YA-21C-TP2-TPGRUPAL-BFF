@@ -1,8 +1,8 @@
 import Joi from 'joi'
 
-export const validar = (jugador) => {
+export const validar = (usuario) => {
 
-    const productoEsquema = Joi.object({
+    const usuarioEsquema = Joi.object({
 
         usuario: Joi.string().alphanum().min(5).max(18).required(),
         email: Joi.string().email({ tlds: { allow: false } }).required(),
@@ -11,7 +11,7 @@ export const validar = (jugador) => {
             .message('La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial')
             .required()
     })
-    const { error } = productoEsquema.validate(jugador, { convert: false })
+    const { error } = usuarioEsquema.validate(usuario)
     if (error) {
         return { result: false, error }
     }
@@ -20,17 +20,16 @@ export const validar = (jugador) => {
     }
 }
 
-export const validarActualizacion = (jugador) => {
-    const productoEsquema = Joi.object({
-        usuario: Joi.string().alphanum().min(5).max(18).required(),
-        email: Joi.string().email({ tlds: { allow: false } }).required(),
-        fechaNac: Joi.date().less('now').required(),
+export const validarActualizacion = (usuario) => {
+    const usuarioEsquema = Joi.object({
+        usuario: Joi.string().alphanum().min(5).max(18),
+        email: Joi.string().email({ tlds: { allow: false } }),
+        fechaNac: Joi.date().less('now'),
         contrasenia: Joi.string().pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9])(?=.{8,})'))
             .message('La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial')
-            .required()
     }).min(1);
 
-    const { error } = productoEsquema.validate(jugador, { convert: false })
+    const { error } = usuarioEsquema.validate(usuario)
     if (error) {
         return { result: false, error }
     } else {

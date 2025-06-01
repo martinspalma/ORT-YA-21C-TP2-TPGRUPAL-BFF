@@ -27,7 +27,7 @@ class ModelMongoDB {
         return jugador
     }
 
-    modificarJugador = async (id, jugador) => {
+    actualizarUsuarios = async (id, jugador) => {
         const index = this.#jugadores.findIndex(j => j.id === id)
 
         if (index != -1) {
