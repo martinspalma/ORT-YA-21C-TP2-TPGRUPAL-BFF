@@ -1,0 +1,98 @@
+{
+  "id": "sala-unica",
+  "jugadores": [
+    {
+      "id": "3",
+      "usuario": "luciano",
+      "cartas": [
+        {
+          "id": "db10aaa0-f562-4541-aff8-35fcb0477689",
+          "tipo": "papel"
+        },
+        {
+          "id": "0751c539-90a1-4ac0-ae80-d283cfa4d961",
+          "tipo": "piedra"
+        },
+        {
+          "id": "17a16e87-881c-40dc-9932-a54513eb510a",
+          "tipo": "tijera"
+        },
+        {
+          "id": "f852ed32-7df8-4373-9950-3cd83d5fe0c1",
+          "tipo": "piedra"
+        },
+        {
+          "id": "a25c3321-63d8-4076-b6ac-271c98add287",
+          "tipo": "tijera"
+        },
+        {
+          "id": "7f09146c-efbe-4fcb-9f4a-1a57a637b53d",
+          "tipo": "papel"
+        },
+        {
+          "id": "7565212f-1f37-455f-8624-a9179c162a80",
+          "tipo": "papel"
+        },
+        {
+          "id": "bfc6297b-88a7-477d-bcbb-75164517bec8",
+          "tipo": "tijera"
+        },
+        {
+          "id": "028c1caf-bd37-4fd5-8071-5a9aa5ff424c",
+          "tipo": "tijera"
+        }
+      ],
+      "ordenadas": false,
+      "historial": []
+    },
+    {
+      "id": "4",
+      "usuario": "Matilda",
+      "cartas": [
+        {
+          "id": "95ab0157-fbf3-4e71-a509-8b5dfde1c6e1",
+          "tipo": "papel"
+        },
+        {
+          "id": "9b882155-1b4a-450a-a771-57ae1cb115fa",
+          "tipo": "piedra"
+        },
+        {
+          "id": "d4ba4eff-8a8e-473b-b947-b45a2e3abe80",
+          "tipo": "piedra"
+        },
+        {
+          "id": "7ce9044c-f39c-45ae-b8ce-ba49bca51c1f",
+          "tipo": "papel"
+        },
+        {
+          "id": "b50a14fd-da38-44f0-b9f6-dabea21b00dc",
+          "tipo": "papel"
+        },
+        {
+          "id": "863fe89f-f700-46d4-be2a-ecb24805b174",
+          "tipo": "papel"
+        },
+        {
+          "id": "22a084aa-6d69-464e-9393-baf372b2d981",
+          "tipo": "piedra"
+        },
+        {
+          "id": "d3f77068-3b5f-4630-98a7-459d6f6c16b2",
+          "tipo": "tijera"
+        },
+        {
+          "id": "fc8fa4c4-00ea-4609-a807-b02191b43a0e",
+          "tipo": "piedra"
+        }
+      ],
+      "ordenadas": false,
+      "historial": []
+    }
+  ],
+  "comenzado": false,
+  "ronda": 1,
+  "finalizada": false,
+  "resultado": null,
+  "estado": "esperando-orden"
+}
