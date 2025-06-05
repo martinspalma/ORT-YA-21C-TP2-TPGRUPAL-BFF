@@ -1,12 +1,14 @@
+import { EventEmitter } from 'events'
 import ModelFactory from '../model/DAO/factory.js'
 import { v4 as uuidv4 } from 'uuid'
 
-class JuegoServicio {
+class JuegoServicio extends EventEmitter {
   #persistencia
   #sala = null
 
-  constructor(persistencia) {
-    this.#persistencia = ModelFactory.get(persistencia, 'juego')
+  constructor(juegoServicio) {
+    super()
+    this.#persistencia = juegoServicio
   }
 
   async init() {
@@ -23,6 +25,7 @@ class JuegoServicio {
       }
       await this.#persistencia.guardarSala(this.#sala)
     }
+    this.emit('estadoActualizado', this.#sala) // Emitir al inicializar
   }
 
   async unirseOSumarJugador(id, usuario) {
@@ -37,8 +40,8 @@ class JuegoServicio {
     }
 
     sala.jugadores.push({
-      id: id,
-      usuario: usuario,
+      id,
+      usuario,
       cartas: [],
       ordenadas: false,
       historial: []
@@ -50,12 +53,12 @@ class JuegoServicio {
     }
 
     await this.#persistencia.guardarSala(sala)
-    return { mensaje:` ${usuario} fue añadido a la sala`, sala }
+    this.emit('estadoActualizado', sala)
+    return { mensaje: ` ${usuario} fue añadido a la sala`, sala }
   }
 
   #repartirCartas(sala) {
     const tipos = ['piedra', 'papel', 'tijera']
-
     const generarCartas = () => {
       const cartas = []
       for (let i = 0; i < 9; i++) {
@@ -89,6 +92,7 @@ class JuegoServicio {
     }
 
     await this.#persistencia.guardarSala(sala)
+    this.emit('estadoActualizado', sala)
     return { mensaje: 'Orden registrado correctamente', sala }
   }
 
@@ -113,6 +117,7 @@ class JuegoServicio {
     sala.resultado = { [j1.id]: puntajeJ1, [j2.id]: puntajeJ2 }
     sala.estado = 'partida-finalizada'
     await this.#persistencia.guardarSala(sala)
+    this.emit('estadoActualizado', sala)
 
     return sala.resultado
   }
@@ -147,6 +152,7 @@ class JuegoServicio {
       sala.finalizada = true
 
       await this.#persistencia.guardarSala(sala)
+      this.emit('estadoActualizado', sala)
 
       return {
         mensaje: 'Juego finalizado',
@@ -161,8 +167,8 @@ class JuegoServicio {
     sala.estado = 'esperando-orden'
 
     this.#repartirCartas(sala)
-
     await this.#persistencia.guardarSala(sala)
+    this.emit('estadoActualizado', sala)
 
     return { mensaje: 'Ronda siguiente creada', ronda: sala.ronda }
   }
