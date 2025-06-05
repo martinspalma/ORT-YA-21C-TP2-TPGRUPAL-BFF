@@ -4,8 +4,8 @@ import JuegoController from '../controlador/juegoController.js'
 class JuegoRouter {
   #cb
 
-  constructor(persistencia) {
-    this.#cb = new JuegoController(persistencia)
+  constructor(juegoServicio) {
+    this.#cb = new JuegoController(juegoServicio)
   }
 
   start() {

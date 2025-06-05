@@ -1,5 +1,7 @@
 
 export class WebSocketManager {
+
+    
   constructor(wsServer, juegoServicioWS) {
     this.wsServer = wsServer
 
@@ -35,5 +37,5 @@ export class WebSocketManager {
       }
     })
   }
-  
+
 }

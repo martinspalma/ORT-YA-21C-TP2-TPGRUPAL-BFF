@@ -4,8 +4,8 @@ import JuegoServicio from '../servicio/juegoServicio.js'
 class JuegoController {
   #servicio
 
-  constructor(persistencia) {
-    this.#servicio = new JuegoServicio(persistencia)
+  constructor(juegoServicio) {
+    this.#servicio = juegoServicio
     this.#servicio.init()
   }
 
