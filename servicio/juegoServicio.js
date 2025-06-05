@@ -6,9 +6,10 @@ class JuegoServicio extends EventEmitter {
   #persistencia
   #sala = null
 
-  constructor(juegoServicio) {
+  constructor(juegoPersistencia) {
     super()
-    this.#persistencia = juegoServicio
+    this.#persistencia=juegoPersistencia
+    
   }
 
   async init() {
@@ -23,7 +24,7 @@ class JuegoServicio extends EventEmitter {
         resultado: null,
         estado: 'esperando-jugadores'
       }
-      await this.#persistencia.guardarSala(this.#sala)
+      await this.#persistencia .guardarSala(this.#sala)
     }
     this.emit('estadoActualizado', this.#sala) // Emitir al inicializar
   }
@@ -151,7 +152,7 @@ class JuegoServicio extends EventEmitter {
       sala.ganador = ganador
       sala.finalizada = true
 
-      await this.#persistencia.guardarSala(sala)
+      await this.#persistencia .guardarSala(sala)
       this.emit('estadoActualizado', sala)
 
       return {

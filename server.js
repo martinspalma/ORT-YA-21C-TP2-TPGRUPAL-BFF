@@ -3,8 +3,9 @@ import http from 'http'
 import { WebSocketServer } from 'ws'
 import { WebSocketManager } from './webSocket/webSocketManager.js'
 import { UsuarioRouter, CartaRouter, JuegoRouter } from './router/index.js'
-import JuegoServicio from './servicio/juegoServicio.js';
-import ModelFactory from './model/modelFactory.js';
+import JuegoServicio from './servicio/juegoServicio.js'
+import ModelFactory from './model/DAO/factory.js'
+
 
 
 class Server{
@@ -34,7 +35,7 @@ app.use(express.urlencoded({extended:true}))
 // INSTANCIO ACA JUEGOSERVICIO PARA USAR EL WEBSOCKET------------
     const juegoPersistencia = ModelFactory.get(this.#persistenciaJuego, 'juego');
     const juegoServicio = new JuegoServicio(juegoPersistencia);
-    juegoServicio.init();
+    
 
 //--------------API RESTful de Productos-------es lo que pone en uso la carpeta vista----------------
 app.use('/api/usuarios', new UsuarioRouter(this.#persistenciaUsuarios).start())
