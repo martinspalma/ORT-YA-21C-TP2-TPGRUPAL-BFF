@@ -1,7 +1,8 @@
 import express from 'express'
-import UsuarioRouter from './router/usuarioRouter.js' 
-import CartaRouter from './router/cartaRouter.js'
-import JuegoRouter from './router/juegoRouter.js'
+import http from 'http'
+import { WebSocketServer } from 'ws'
+import { WebSocketManager } from './webSocket/webSocketManager.js'
+import { UsuarioRouter, CartaRouter, JuegoRouter } from './router/index.js'
 
 
 class Server{
@@ -9,6 +10,9 @@ class Server{
     #persistenciaCartas
     #persistenciaUsuarios
     #persistenciaJuego
+    #wsServer
+    #websocketManager
+
     constructor (port, persistenciaCartas, persistenciaUsuarios, persistenciaJuego){
         this.#port=port
         this.#persistenciaCartas=persistenciaCartas
@@ -17,6 +21,8 @@ class Server{
     }
 start(){
 const app= express()
+const server = http.createServer(app)
+
 
 //-------------------MIDDLEWARES EXPRESS---------------------
 app.use('/', express.static('public'))// middleware para tomar los recursos estaticos de la carpeta public
@@ -29,12 +35,20 @@ app.use('/api/cartas', new CartaRouter(this.#persistenciaCartas).start())
 app.use('/api/juego', new JuegoRouter(this.#persistenciaJuego).start())
 
 //------------------ SECTOR LISTEN--------------------------
-const port = this.#port 
-const server= app.listen(port, () => { 
-console.log(`Servidor escuchando en http://localhost:${port}`)})
-server.on('error', (error)=>{
- console.log(`error en servidor: ${error.message}`)
+server.listen(this.#port, () => {
+  console.log(`Servidor escuchando en http://localhost:${this.#port}`)
 })
+
+server.on('error', (error) => {
+  console.log(`Error en servidor: ${error.message}`)
+})
+
+this.#wsServer = new WebSocketServer({ server })
+console.log('Servidor WebSocket iniciado')
+this.#websocketManager = new WebSocketManager(this.#wsServer)
+
+
 }
 }
+
 export default Server
