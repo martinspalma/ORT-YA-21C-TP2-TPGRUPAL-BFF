@@ -37,6 +37,7 @@ app.use(express.urlencoded({extended:true}))
     const juegoServicio = new JuegoServicio(juegoPersistencia);
     
 
+    
 //--------------API RESTful de Productos-------es lo que pone en uso la carpeta vista----------------
 app.use('/api/usuarios', new UsuarioRouter(this.#persistenciaUsuarios).start())
 app.use('/api/cartas', new CartaRouter(this.#persistenciaCartas).start())
