@@ -1,5 +1,7 @@
 import ModelFactory from '../model/DAO/factory.js'
 import { validar, validarActualizacion } from './validaciones/usuarios.js'
+import config from './config.js'
+import jwt from 'jsonwebtoken'
 
 
 class Servicio {
@@ -61,8 +63,21 @@ loginUsuario = async (usuarioIngresado, contraseniaIngresada) => {
         throw new Error('Contraseña incorrecta')
     }
 
-    const { contrasenia, ...datosPublicos } = usuarioEncontrado
-    return datosPublicos
+    //const { contrasenia, ...datosPublicos } = usuarioEncontrado
+    //return datosPublicos
+    //TODO ESTO ESTA COMENTADO PARA IMPLEMENTAR EL TOKEN
+
+    const token = jwt.sign(
+        {
+            id: usuarioEncontrado._id,
+            usuario: usuarioEncontrado.usuario,
+            email: usuarioEncontrado.email
+        },
+        config.CLAVETOKEN,
+        { expiresIn: '1h' }
+    )
+
+    return { token }
 }
 
 
