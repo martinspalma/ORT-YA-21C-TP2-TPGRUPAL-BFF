@@ -5,7 +5,7 @@ import { WebSocketManager } from './webSocket/webSocketManager.js'
 import { UsuarioRouter, CartaRouter, JuegoRouter } from './router/index.js'
 import JuegoServicio from './servicio/juegoServicio.js'
 import ModelFactory from './model/DAO/factory.js'
-
+import cors from 'cors'
 
 
 class Server{
@@ -24,6 +24,7 @@ class Server{
     }
 start(){
 const app= express()
+app.use(cors())
 const server = http.createServer(app)
 
 
