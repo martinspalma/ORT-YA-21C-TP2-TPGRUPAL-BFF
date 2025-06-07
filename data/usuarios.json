@@ -12,5 +12,12 @@
 		"fechaNac": "2019-06-04",
 		"contrasenia": "4456Lp&&",
 		"id": "4"
+	},
+	{
+		"usuario": "ignacio",
+		"email": "ig@hotmail.com",
+		"fechaNac": "2025-04-02",
+		"contrasenia": "1234$$Gg",
+		"id": "5"
 	}
 ]

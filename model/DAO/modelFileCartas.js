@@ -5,7 +5,7 @@ class ModelFileCartas extends ArchivoPersistencia {
 
     constructor() {
 
-       super('cartas.json')
+       super('./data/cartas.json')
     }
 
     

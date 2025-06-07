@@ -1,4 +1,4 @@
-import config from "./servicio/config.js"
+import config from "./config.js"
 import Server from "./server.js"
 import CnxMongoDB from "./model/DBMongo.js"
 
