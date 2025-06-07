@@ -24,7 +24,6 @@ class Server{
     }
 start(){
 const app= express()
-app.use(cors())
 const server = http.createServer(app)
 
 
@@ -32,6 +31,11 @@ const server = http.createServer(app)
 app.use('/', express.static('public'))// middleware para tomar los recursos estaticos de la carpeta public
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use(cors({
+    origin: ['http://localhost:8081'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }))
 
 // INSTANCIO ACA JUEGOSERVICIO PARA USAR EL WEBSOCKET------------
     const juegoPersistencia = ModelFactory.get(this.#persistenciaJuego, 'juego');
