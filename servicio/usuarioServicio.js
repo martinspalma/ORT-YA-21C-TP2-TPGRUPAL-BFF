@@ -1,6 +1,6 @@
 import ModelFactory from '../model/DAO/factory.js'
 import { validar, validarActualizacion } from './validaciones/usuarios.js'
-import config from './config.js'
+import config from '../config.js'
 import jwt from 'jsonwebtoken'
 
 

@@ -1,13 +1,12 @@
 import ArchivoPersistencia from './archivoPersistencia.js'
 
 class ModelFileUsuarios extends ArchivoPersistencia{
-    #usuarios= 'usuarios.json'
+    
 
     constructor() {
 
-        super('usuarios.json')
+        super('./data/usuarios.json')
     }
-
 
     obtenerUsuario = async (id) => {
 
