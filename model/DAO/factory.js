@@ -4,6 +4,7 @@ import ModelFileUsuarios from './modelFileUsuarios.js'
 import ModelFileCartas from './modelFileCartas.js'
 import ModelFileJuego from './modelFileJuego.js'
 import ModelMongoDBUsuarios from './modelMongoDBUsuarios.js'
+import ModelMongoDBJuego from './modelMongoDBJuego.js'
 
 class ModelFactory {
     static get(tipo, entidad) {
@@ -26,7 +27,7 @@ class ModelFactory {
                 console.log(`******* Persistiendo en MongoDB (${entidad}) ***********`)
                 if (entidad === 'usuarios') return new ModelMongoDBUsuarios()
                // if (entidad === 'cartas') return new ModelFileCartas()
-               // if (entidad === 'juego') return new ModelFileJuego()
+                if (entidad === 'juego') return new ModelMongoDBJuego()
                 break
 
             default:

@@ -38,6 +38,8 @@ class ModelMemCartas {
   }
 
   borrarCarta = async (id) => {
+    
+
     const index = this.#cartas.findIndex(c => c.id === id)
 
     if (index !== -1) {
