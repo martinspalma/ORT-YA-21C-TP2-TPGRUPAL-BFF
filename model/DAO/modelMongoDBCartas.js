@@ -1,4 +1,4 @@
-import { CartaModel } from './models/carta.js'
+import { CartaModel } from './models/cartas.js'
 import CnxMongoDB from "../DBMongo.js"
 
 class ModelMongoDBCartas {
