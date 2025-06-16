@@ -5,7 +5,7 @@ dotenv.config();
 const MODO_PERSISTENCIA_USUARIOS=process.env.MODO_PERSISTENCIA_USUARIOS 
 const MODO_PERSISTENCIA_CARTAS=process.env.MODO_PERSISTENCIA_CARTAS
 const MODO_PERSISTENCIA_JUEGO=process.env.MODO_PERSISTENCIA_JUEGO 
-const STRCNX = process.env.STRCNX || 'mongodb://127.0.0.1'
+const STRCNX =process.env.STRCNX || 'mongodb://127.0.0.1'
 const PORT = process.env.PORT || 8080
 const BASE= process.env.BASE || 'test'
 const CLAVETOKEN= process.env.CLAVETOKEN

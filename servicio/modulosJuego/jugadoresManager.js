@@ -1,21 +1,24 @@
 import { repartirCartas } from './cartasManager.js'
 
-export async function agregarJugador(sala, id, usuario, persistencia) {
+export async function agregarJugador(sala, id, usuario, socketId, persistencia) {
   if (sala.jugadores.length >= 2) {
     throw new Error('La sala ya tiene dos jugadores')
   }
 
   const jugadorExistente = sala.jugadores.find(j => j.id === id)
   if (jugadorExistente) {
+    jugadorExistente.socketId = socketId;    
     return { mensaje: ` ${usuario} Ya estás en la sala`, sala }
   }
 
   sala.jugadores.push({
     id,
     usuario,
+    socketId,
     cartas: [],
     ordenadas: false,
     historial: []
+    
   })
 
   if (sala.jugadores.length === 2) {

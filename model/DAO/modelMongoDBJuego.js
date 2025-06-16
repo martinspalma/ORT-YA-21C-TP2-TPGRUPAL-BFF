@@ -6,7 +6,7 @@ class ModelMongoDBJuego {
   }
 
   async cargarSala() {
-    const sala = await SalaModel.findById(this.id).lean()
+    const sala = await SalaModel.findById(this.id)
     return sala || null
   }
 

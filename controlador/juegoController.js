@@ -8,9 +8,11 @@ class JuegoController {
     this.#servicio = juegoServicio
     this.#servicio.init()
   }
+  
 
   unirseASala = async (req, res) => {
     try {
+      //await this.#servicio.init()
       const { id, usuario } = req.body
       const resultado = await this.#servicio.unirseOSumarJugador(id, usuario)
       res.json(resultado)
