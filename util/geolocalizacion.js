@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import axios from "axios";
 
 export const obtenerPaisPorIP = async(ip)=>{
     if (ip.startsWith('::ffff:')) {
@@ -6,8 +6,7 @@ export const obtenerPaisPorIP = async(ip)=>{
     }
     
     try {
-        const resApi = await fetch(`http://ip-api.com/json/${ip}`)
-        const data = await resApi.json()
+        const {data} = await axios.get(`http://ip-api.com/json/${ip}`) 
 
         return {
             nombre: data.country,
