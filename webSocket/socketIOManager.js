@@ -1,3 +1,4 @@
+import { obtenerPaisPorIP } from "../util/geolocalizacion.js";
 
 export class SocketIOManager {
     #io;
@@ -16,8 +17,15 @@ export class SocketIOManager {
 
 
     #setupSocketIOListeners() {
-        this.#io.on('connection', (socket) => {
+        this.#io.on('connection', async(socket) => {
             console.log(`Nuevo Cliente Socket.IO conectado. ID: ${socket.id}. Total conectados: ${this.#io.engine.clientsCount}`);
+
+            const ip = socket.handshake.addres
+            const pais = await obtenerPaisPorIP(ip)
+
+            console.log(`Cliente conectado desde ${pais.nombre}`)
+
+            socket.pais = pais
 
             this.#juegoServicio.obtenerSala()
                 .then(salaInicial => {
