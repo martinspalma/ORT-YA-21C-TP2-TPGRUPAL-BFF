@@ -20,7 +20,8 @@ export class SocketIOManager {
         this.#io.on('connection', async(socket) => {
             console.log(`Nuevo Cliente Socket.IO conectado. ID: ${socket.id}. Total conectados: ${this.#io.engine.clientsCount}`);
 
-            const ip = socket.handshake.addres
+            //const ip = socket.handshake.address
+            const ip = "8.8.8.8"
             const pais = await obtenerPaisPorIP(ip)
 
             console.log(`Cliente conectado desde ${pais.nombre}`)
