@@ -1,20 +1,6 @@
 {
   "id": "sala-unica",
   "jugadores": [
-    {
-      "id": "4",
-      "usuario": {
-        "usuario": "Matilda",
-        "email": "matilda@example.com",
-        "fechaNac": "2000-01-01",
-        "contrasenia": "password123",
-        "id": "4"
-      },
-      "socketId": "YiQAQe8UHlpSd5JUAAAB",
-      "cartas": [],
-      "ordenadas": false,
-      "historial": []
-    }
   ],
   "comenzado": false,
   "ronda": 1,

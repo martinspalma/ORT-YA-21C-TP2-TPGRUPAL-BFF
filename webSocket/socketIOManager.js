@@ -33,15 +33,37 @@ export class SocketIOManager {
                     if (salaInicial) {
                         socket.emit('ESTADO_SALA_ACTUALIZADO', salaInicial);
                     }
+                    else //Si no hay sala default todavía
+                    {
+                        socket.emit('ESTADO_SALA_ACTUALIZADO', { jugadores: [], estado: 'esperando-jugadores', id: 'sala-unica' });
+                    }
                 })
                 .catch(error => {
                     console.error(`Error al enviar estado inicial al cliente ${socket.id}:`, error);
                     socket.emit('ERROR', { mensaje: 'Error al cargar estado inicial de la sala.' });
                 });
 
+            socket.on('SOLICITAR_SALA_INICIAL', async () => {
+            console.log(`Cliente ${socket.id} solicita estado inicial`);
+                try {
+                    const salaInicial = await this.#juegoServicio.obtenerSala();
+                    if (salaInicial) {
+                        socket.emit('ESTADO_SALA_ACTUALIZADO', salaInicial);
+                    } else {
+                        // If no default room exists yet
+                        socket.emit('ESTADO_SALA_ACTUALIZADO', { 
+                            jugadores: [], 
+                            estado: 'esperando-jugadores', 
+                            id: 'sala-unica' 
+                        });
+                    }
+                } catch (error) {
+                    console.error(`Error al enviar estado inicial al cliente ${socket.id}:`, error);
+                    socket.emit('ERROR', { mensaje: 'Error al cargar estado inicial de la sala.' });
+                }
+            });
 
             // --- Aca reemplaza el router y el controlador y pasa derecho al servicio ---
-            
             socket.on('UNIRSE_JUEGO', async (data) => {
                 console.log(`Evento UNIRSE_JUEGO recibido del cliente (${socket.id}):`, data);
                 let parsedData = typeof data === 'string' ? JSON.parse(data) : data;
