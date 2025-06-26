@@ -12,29 +12,29 @@ class JuegoServicio extends EventEmitter {
 
   constructor(juegoPersistencia) {
     super()
-    this.#persistencia = juegoPersistencia
-
+    this.#persistencia = juegoPersistencia;
+    this.init()
   }
 
-  async init() {
+  init = async () => {
     this.#sala = await inicializarSala(this.#persistencia)
     this.#emitirEstadoActualizado()
   }
 
 
-  async unirseOSumarJugador(id, usuario, socketId) {
+  unirseOSumarJugador = async (id, usuario, socketId) => {
     const resultado = await agregarJugador(this.#sala, id, usuario, socketId, this.#persistencia)
     this.#emitirEstadoActualizado()
     return resultado
   }
 
-  async registrarOrdenCartas(id, nuevoOrden) {
+  registrarOrdenCartas = async (id, nuevoOrden) => {
     const resultado = await ordenarCartas(this.#sala, id, nuevoOrden, this.#persistencia)
     this.#emitirEstadoActualizado()
     return resultado
   }
 
-  async enfrentarCartas() {
+  enfrentarCartas= async () => {
     if (this.#sala.estado !== 'cartas-ordenadas') {
       throw new Error('La sala no está lista para jugar')
     }
@@ -44,7 +44,7 @@ class JuegoServicio extends EventEmitter {
     return resultado
   }
 
-  async avanzarRonda() {
+  avanzarRonda = async() => {
     if (this.#sala.estado !== 'partida-finalizada') {
       throw new Error('No se puede avanzar: la partida no terminó.')
     }
@@ -54,7 +54,7 @@ class JuegoServicio extends EventEmitter {
     return resultado
   }
 
-  async obtenerSala() {
+    obtenerSala = async() => {
     return this.#sala
   }
 

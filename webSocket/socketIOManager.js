@@ -7,7 +7,7 @@ export class SocketIOManager {
     constructor(ioServer, juegoServicio) {
         this.#io = ioServer;
         this.#juegoServicio = juegoServicio;
-
+        
         // Configura los listeners para el servidor Socket.IO
         this.#setupSocketIOListeners();
         this.#setupOyentesDelServicio();
@@ -44,6 +44,26 @@ export class SocketIOManager {
                     console.error(`Error al enviar estado inicial al cliente ${socket.id}:`, error);
                     socket.emit('ERROR', { mensaje: 'Error al cargar estado inicial de la sala.' });
                 });
+
+            socket.on('SOLICITAR_SALA_INICIAL', async () => {
+            console.log(`Cliente ${socket.id} solicita estado inicial`);
+                try {
+                    const salaInicial = await this.#juegoServicio.obtenerSala();
+                    if (salaInicial) {
+                        socket.emit('ESTADO_SALA_ACTUALIZADO', salaInicial);
+                    } else {
+                        // If no default room exists yet
+                        socket.emit('ESTADO_SALA_ACTUALIZADO', { 
+                            jugadores: [], 
+                            estado: 'esperando-jugadores', 
+                            id: 'sala-unica' 
+                        });
+                    }
+                } catch (error) {
+                    console.error(`Error al enviar estado inicial al cliente ${socket.id}:`, error);
+                    socket.emit('ERROR', { mensaje: 'Error al cargar estado inicial de la sala.' });
+                }
+            });
 
 
             // --- Aca reemplaza el router y el controlador y pasa derecho al servicio ---
