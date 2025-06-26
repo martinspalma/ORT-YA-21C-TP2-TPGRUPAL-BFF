@@ -20,22 +20,24 @@ export class SocketIOManager {
         this.#io.on('connection', async(socket) => {
             console.log(`Nuevo Cliente Socket.IO conectado. ID: ${socket.id}. Total conectados: ${this.#io.engine.clientsCount}`);
 
-            //const ip = socket.handshake.address
-            const ip = "8.8.8.8"
-            const pais = await obtenerPaisPorIP(ip)
+            const ip = socket.handshake.address;
+            socket.ip = ip;
 
-            console.log(`Cliente conectado desde ${pais.nombre}`)
+            try {
+                const pais = await obtenerPaisPorIP(ip);
+                socket.pais = pais;
+                console.log(`Cliente conectado desde ${pais?.nombre}`);
 
-            socket.pais = pais
+                socket.emit('PAIS_DETECTADO', { nombre: pais?.nombre, codigo: pais?.country_code });
+            } catch (e) {
+                console.error("Error obteniendo país por IP:", e.message);
+                socket.emit('PAIS_DETECTADO', { error: "No se pudo detectar el país" });
+            }
 
             this.#juegoServicio.obtenerSala()
                 .then(salaInicial => {
                     if (salaInicial) {
                         socket.emit('ESTADO_SALA_ACTUALIZADO', salaInicial);
-                    }
-                    else //Si no hay sala default todavía
-                    {
-                        socket.emit('ESTADO_SALA_ACTUALIZADO', { jugadores: [], estado: 'esperando-jugadores', id: 'sala-unica' });
                     }
                 })
                 .catch(error => {
@@ -43,27 +45,9 @@ export class SocketIOManager {
                     socket.emit('ERROR', { mensaje: 'Error al cargar estado inicial de la sala.' });
                 });
 
-            socket.on('SOLICITAR_SALA_INICIAL', async () => {
-            console.log(`Cliente ${socket.id} solicita estado inicial`);
-                try {
-                    const salaInicial = await this.#juegoServicio.obtenerSala();
-                    if (salaInicial) {
-                        socket.emit('ESTADO_SALA_ACTUALIZADO', salaInicial);
-                    } else {
-                        // If no default room exists yet
-                        socket.emit('ESTADO_SALA_ACTUALIZADO', { 
-                            jugadores: [], 
-                            estado: 'esperando-jugadores', 
-                            id: 'sala-unica' 
-                        });
-                    }
-                } catch (error) {
-                    console.error(`Error al enviar estado inicial al cliente ${socket.id}:`, error);
-                    socket.emit('ERROR', { mensaje: 'Error al cargar estado inicial de la sala.' });
-                }
-            });
 
             // --- Aca reemplaza el router y el controlador y pasa derecho al servicio ---
+            
             socket.on('UNIRSE_JUEGO', async (data) => {
                 console.log(`Evento UNIRSE_JUEGO recibido del cliente (${socket.id}):`, data);
                 let parsedData = typeof data === 'string' ? JSON.parse(data) : data;
