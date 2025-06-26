@@ -1,0 +1,65 @@
+{
+  "id": "sala-unica",
+  "jugadores": [
+    {
+      "id": "684a2a5553671c03f341c25a",
+      "usuario": {
+        "id": "684a2a5553671c03f341c25a",
+        "usuario": {
+          "id": "684a2a5553671c03f341c25a",
+          "usuario": "luciano",
+          "email": "lp@yahoo.com",
+          "iat": 1750805119,
+          "exp": 1750808719
+        }
+      },
+      "socketId": "ddS0-MHL0OatMqS5AAAl",
+      "cartas": [
+        {
+          "id": "bb70e429-6772-4979-9c81-daf6d25d8b70",
+          "tipo": "piedra"
+        },
+        {
+          "id": "119e0985-e993-4293-b1a0-41e8ba88b885",
+          "tipo": "piedra"
+        },
+        {
+          "id": "a479f9ce-eb80-4a09-9bed-ed6e65c4f6bc",
+          "tipo": "tijera"
+        },
+        {
+          "id": "698395f5-8463-40b0-9dd1-b303d7c7e50f",
+          "tipo": "papel"
+        },
+        {
+          "id": "6826687b-05d5-4d9f-bff2-2bb1262b48f6",
+          "tipo": "piedra"
+        },
+        {
+          "id": "06618fda-d34c-4ed9-90c8-c71d9d0eb40b",
+          "tipo": "papel"
+        },
+        {
+          "id": "20c85d81-09c6-418f-870b-e3a0183621c1",
+          "tipo": "tijera"
+        },
+        {
+          "id": "f3daa8e8-d94c-4efa-9545-eb1c367ceb12",
+          "tipo": "papel"
+        },
+        {
+          "id": "8b659973-fb67-41fc-bd00-30a75b561829",
+          "tipo": "tijera"
+        }
+      ],
+      "ordenadas": false,
+      "historial": []
+    }
+  ],
+  "comenzado": false,
+  "ronda": 1,
+  "finalizada": true,
+  "resultado": null,
+  "estado": "juego-finalizado",
+  "ganador": "684a2a5553671c03f341c25a"
+}

@@ -78,7 +78,6 @@ export class SocketIOManager {
                 }
                 try {
                     await this.#juegoServicio.unirseOSumarJugador(parsedData.usuario.id, parsedData.usuario, socket.id)
-
                 } catch (e) {
                     console.error(`Error al procesar UNIRSE_JUEGO para ${socket.id}: ${e.message}`);
                     socket.emit('ERROR', { mensaje: `Error al unirse al juego: ${e.message}` });

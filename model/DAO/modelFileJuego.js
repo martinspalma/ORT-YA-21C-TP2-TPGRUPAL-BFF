@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 
 class JuegoPersistenciaArchivo {
-  constructor(rutaArchivo = './data/sala.json') {
+  constructor(rutaArchivo = './data/sala.out') {
     this.rutaArchivo = rutaArchivo
   }
 
