@@ -1,3 +1,5 @@
 node_modules/
 .env
 base/
+data/sala.json
+data/sala.out

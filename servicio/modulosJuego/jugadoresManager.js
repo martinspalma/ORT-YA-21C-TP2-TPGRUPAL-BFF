@@ -23,6 +23,7 @@ export async function agregarJugador(sala, id, usuario, socketId, persistencia) 
 
   if (sala.jugadores.length === 2) {
     repartirCartas(sala)
+    sala.comenzado = true
     sala.estado = 'esperando-orden'
   }
 
