@@ -7,7 +7,9 @@ import jwt from 'jsonwebtoken'
 class Servicio {
    
     #model
+     #persistenciaType
     constructor(persistencia) {
+        this.#persistenciaType = persistencia;
         this.#model = ModelFactory.get(persistencia, 'usuarios')
 
     }
@@ -62,14 +64,19 @@ loginUsuario = async (usuarioIngresado, contraseniaIngresada) => {
     if (usuarioEncontrado.contrasenia !== contraseniaIngresada) {
         throw new Error('Contraseña incorrecta')
     }
-
-    //const { contrasenia, ...datosPublicos } = usuarioEncontrado
-    //return datosPublicos
-    //TODO ESTO ESTA COMENTADO PARA IMPLEMENTAR EL TOKEN
+    //porque no encontraba el id en front si persisto en file
+let userIdToSign;
+        // Determinar qué ID usar basado en el tipo de persistencia
+        if (this.#persistenciaType === 'MONGODB') {
+            userIdToSign = usuarioEncontrado._id; // Para MongoDB, el ID es '_id'
+        } else if (this.#persistenciaType === 'FILE') {
+            userIdToSign = usuarioEncontrado.id;
+        }
+    // EL TOKEN
 
     const token = jwt.sign(
         {
-            id: usuarioEncontrado._id,
+            id: userIdToSign,
             usuario: usuarioEncontrado.usuario,
             email: usuarioEncontrado.email
         },
