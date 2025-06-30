@@ -78,7 +78,11 @@ let userIdToSign;
         {
             id: userIdToSign,
             usuario: usuarioEncontrado.usuario,
-            email: usuarioEncontrado.email
+            email: usuarioEncontrado.email,
+            pfp: usuarioEncontrado.pfp,
+            wins: usuarioEncontrado.wins,
+            losses: usuarioEncontrado.losses,
+            draws: usuarioEncontrado.draws
         },
         config.CLAVETOKEN,
         { expiresIn: '1h' }
