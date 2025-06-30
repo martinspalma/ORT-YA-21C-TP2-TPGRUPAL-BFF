@@ -79,7 +79,10 @@ loginUsuario = async (usuarioIngresado, contraseniaIngresada) => {
 
     return { token }
 }
-
+actualizarEstadisticas = async (id, updates) => {
+        
+        return await this.#model.actualizarEstadisticas(id, updates);
+    }
 
 }
 

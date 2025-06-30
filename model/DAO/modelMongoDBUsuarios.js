@@ -34,6 +34,33 @@ class ModelMongoDBUsuarios {
         return actualizado
     }
 
+// --- NUEVO MÉTODO: Para incrementar estadísticas de usuario en MongoDB ---
+    actualizarEstadisticas = async (id, updates) => {
+         if (!CnxMongoDB.connectionOK) throw new Error('ERROR CNX BASE DE DATOS!!!')
+
+        try {
+            // Usamos UsuarioModel directamente para la operación atómica de incremento ($inc)
+            // 'updates' contendrá { wins: 1 }, { losses: 1 }, o { draws: 1 }
+            const updatedUser = await UsuarioModel.findByIdAndUpdate(
+                id,
+                { $inc: updates }, // Usa $inc para incrementar los campos
+                { new: true } // Retorna el documento actualizado
+            );
+
+            if (!updatedUser) {
+                console.warn(`[UsuarioServicio] Usuario con ID ${userId} no encontrado para actualizar estadísticas.`);
+                return null;
+            }
+            console.log(`[UsuarioServicio] Estadísticas actualizadas para usuario ${userId}:`, updatedUser.wins, updatedUser.losses, updatedUser.draws);
+            return updatedUser;
+
+        } catch (error) {
+            console.error(`[UsuarioServicio] Error al actualizar estadísticas del usuario ${userId}:`, error);
+            
+        }
+    }
+    
+
     borrarUsuarios = async id => {
         if (!CnxMongoDB.connectionOK) throw new Error('ERROR CNX BASE DE DATOS!!!')
 

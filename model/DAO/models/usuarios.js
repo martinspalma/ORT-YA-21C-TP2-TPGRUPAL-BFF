@@ -4,7 +4,6 @@ import bcrypt from "bcrypt"
 const usuarioSchema = mongoose.Schema({
     usuario: {
 type: String,
-
 match: /^[a-zA-Z0-9]+$/, // alphanum
 
 },
@@ -30,7 +29,22 @@ type: String,
 
 //match: /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[^A-Za-z0-9])(?=.{8,})/
 
-}   
+},
+
+wins: { 
+    type: Number, default: 0, min: 0
+ }, 
+
+losses: {
+     type: Number, default: 0, min: 0
+     }, 
+draws: { 
+    type: Number, default: 0 , min: 0
+},  
+
+    pfp: { 
+        type: String, default: 'https://placehold.co/100x100/CCCCCC/FFFFFF?text=PFPI'
+     }
 }, {versionKey: false})
 
 // Formateo JSON para mostrar fecha como 'YYYY-MM-DD'

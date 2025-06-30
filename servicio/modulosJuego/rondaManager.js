@@ -40,6 +40,24 @@ export async function avanzarRonda(sala, persistencia, repartirCartas) {
     sala.ganador = ganador
     sala.finalizada = true
 
+    //bloque para persistir resultados de la partida segun nuevos atributos
+    try {
+      if (ganador === 'empate') {
+        // Incrementa 'draws' para ambos jugadores
+        await persistencia.actualizarEstadisticas(j1.id, { $inc: { draws: 1 } });
+        await persistencia.actualizarEstadisticas(j2.id, { $inc: { draws: 1 } });
+        console.log(`Juego finalizado: Empate. Estadísticas de draws actualizadas para ${j1.usuario} y ${j2.usuario}.`);
+      } else {
+        // Incrementa 'wins' para el ganador y 'losses' para el perdedor
+        await persistencia.actualizarEstadisticas(winnerId, { $inc: { wins: 1 } });
+        await persistencia.actualizarEstadisticas(loserId, { $inc: { losses: 1 } });
+        console.log(`Juego finalizado: ${ganador} ganó. Estadísticas actualizadas para ${j1.usuario} y ${j2.usuario}.`);
+      }
+    } catch (error) {
+      console.error(`Error al actualizar estadísticas del usuario al finalizar el juego:`, error);
+    }
+
+
     await persistencia.guardarSala(sala)
     return {
       mensaje: 'Juego finalizado',

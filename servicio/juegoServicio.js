@@ -79,6 +79,18 @@ class JuegoServicio extends EventEmitter {
           this.#sala.ganador = jugadorRestante.id;
           this.#sala.finalizada = true;
           console.log(`El jugador ${jugadorRestante.usuario}  ha ganado por desconexión.`);
+        
+          // ---Bloque para actualizar nuevos atributos por desconexion ---
+          try {
+            // Incrementa 'wins' para el jugador restante
+            await this.#persistencia.actualizarEstadisticas(jugadorRestante.id, { $inc: { wins: 1 } });
+            // Incrementa 'losses' para el jugador desconectado
+            await this.#persistencia.actualizarEstadisticas(jugadorDesconectado.id, { $inc: { losses: 1 } });
+            console.log(`Estadísticas actualizadas por desconexión: ${jugadorRestante.usuario} (win), ${jugadorDesconectado.usuario} (loss).`);
+          } catch (error) {
+            console.error(`Error al actualizar estadísticas por desconexión para ${jugadorRestante.usuario} o ${jugadorDesconectado.usuario}:`, error);
+          }
+          
         }
       }
       this.#sala.jugadores = this.#sala.jugadores.filter(j => j.id !== jugadorDesconectado.id);
