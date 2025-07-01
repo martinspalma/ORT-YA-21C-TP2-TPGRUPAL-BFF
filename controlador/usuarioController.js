@@ -3,8 +3,8 @@ import Servicio from '../servicio/usuarioServicio.js'
 
 class Controlador {
     #servicio
-    constructor(persistencia) {
-        this.#servicio = new Servicio(persistencia)
+    constructor(usuarioServicio, persistencia) {
+        this.#servicio = usuarioServicio
     }
 
     obtenerUsuarios = async (req, res) => {

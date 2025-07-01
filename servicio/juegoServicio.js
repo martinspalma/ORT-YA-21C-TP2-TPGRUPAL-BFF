@@ -3,16 +3,18 @@ import { EventEmitter } from 'events'
 import { inicializarSala } from './modulosJuego/salaManager.js'
 import { agregarJugador, ordenarCartas } from './modulosJuego/jugadoresManager.js'
 import { repartirCartas } from './modulosJuego/cartasManager.js'
-import { enfrentarCartas, avanzarRonda } from './modulosJuego/rondaManager.js'
+import { enfrentarCartas } from './modulosJuego/rondaManager.js'
 
 class JuegoServicio extends EventEmitter {
   #persistencia
+  #usuarioServicio
   #sala = null
 
 
-  constructor(juegoPersistencia) {
+  constructor(juegoPersistencia, usuarioServicio) {
     super()
     this.#persistencia = juegoPersistencia;
+    this.#usuarioServicio= usuarioServicio;
     this.init()
   }
 
@@ -43,20 +45,21 @@ class JuegoServicio extends EventEmitter {
       throw new Error('La sala no está lista para jugar')
     }
 
-    const resultado = await enfrentarCartas(this.#sala, this.#persistencia)
+    const resultado = await enfrentarCartas(this.#sala, this.#persistencia, this.#usuarioServicio)
     //this.#emitirEstadoActualizado()
+    //this.#emitirFinPartida();
     return resultado
   }
 
-  avanzarRonda = async() => {
-    if (this.#sala.estado !== 'partida-finalizada') {
-      throw new Error('No se puede avanzar: la partida no terminó.')
-    }
+  // avanzarRonda = async() => {
+  //   if (this.#sala.estado !== 'partida-finalizada') {
+  //     throw new Error('No se puede avanzar: la partida no terminó.')
+  //   }
 
-    const resultado = await avanzarRonda(this.#sala, this.#persistencia, repartirCartas)
-    this.#emitirEstadoActualizado()
-    return resultado
-  }
+  //   const resultado = await avanzarRonda(this.#sala, this.#persistencia, repartirCartas)
+  //   this.#emitirEstadoActualizado()
+  //   return resultado
+  // }
 
     obtenerSala = async() => {
     return this.#sala

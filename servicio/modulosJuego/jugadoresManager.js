@@ -17,7 +17,7 @@ export async function agregarJugador(sala, id, usuario, socketId, persistencia) 
     socketId,
     cartas: [],
     ordenadas: false,
-    historial: []
+    //historial: []
     
   })
 

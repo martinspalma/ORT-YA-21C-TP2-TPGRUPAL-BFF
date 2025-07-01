@@ -3,8 +3,8 @@ import Controlador from '../controlador/usuarioController.js'
 
 class UsuarioRouter {
     #cb = null
-    constructor(persistencia) {
-        this.#cb = new Controlador(persistencia)
+    constructor(usuarioServicio, persistencia) {
+        this.#cb = new Controlador(usuarioServicio, persistencia)
     }
 
     start() {
