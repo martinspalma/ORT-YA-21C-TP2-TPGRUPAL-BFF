@@ -18,24 +18,29 @@ export async function enfrentarCartas(sala, persistencia) {
 
   sala.resultado = { [j1.id]: puntajeJ1, [j2.id]: puntajeJ2 }
   sala.estado = 'partida-finalizada'
+  let ganador = "empate"
+  if(puntajeJ1 > puntajeJ2) ganador = j1.id
+  else if(puntajeJ1 < puntajeJ2) ganador = j2.id
+  sala.ganador = ganador; //Solución temporal para que sean una sola ronda
+  console.log('Total J1: ', puntajeJ1, " - Total J2: ", puntajeJ2, " y - ", sala.ganador);
   await persistencia.guardarSala(sala)
   return sala.resultado
 }
 
 export async function avanzarRonda(sala, persistencia, repartirCartas) {
+  const LIMITE_CANT_RONDAS = 3;
   const [j1, j2] = sala.jugadores
   const ronda = sala.ronda
 
   j1.historial.push({ ronda, puntaje: sala.resultado[j1.id] })
   j2.historial.push({ ronda, puntaje: sala.resultado[j2.id] })
-
-  if (ronda >= 3) {
+  if (ronda >= LIMITE_CANT_RONDAS) {
     const totalJ1 = j1.historial.reduce((acc, r) => acc + r.puntaje, 0)
     const totalJ2 = j2.historial.reduce((acc, r) => acc + r.puntaje, 0)
     let ganador = 'empate'
     if (totalJ1 > totalJ2) ganador = j1.id
     else if (totalJ2 > totalJ1) ganador = j2.id
-
+    
     sala.estado = 'juego-finalizado'
     sala.ganador = ganador
     sala.finalizada = true

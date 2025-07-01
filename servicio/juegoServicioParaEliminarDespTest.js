@@ -94,7 +94,7 @@ class JuegoServicio extends EventEmitter {
     }
 
     await this.#persistencia.guardarSala(sala)
-    this.emit('estadoActualizado', sala)
+    //this.emit('estadoActualizado', sala)
     return { mensaje: 'Orden registrado correctamente', sala }
   }
 

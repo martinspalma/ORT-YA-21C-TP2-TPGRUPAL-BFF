@@ -84,8 +84,8 @@ export class SocketIOManager {
                 }
             });
 
-            socket.on('ORDENAR_CARTAS', async (data) => {
-                console.log(`Evento ORDENAR_CARTAS recibido del cliente (${socket.id}):`, data);
+            socket.on('CARTAS_ORDENADAS_ENVIADO', async (data) => {
+                console.log(`Evento CARTAS_ORDENADAS_ENVIADO recibido del cliente (${socket.id}):`, data);
                 let parsedData = typeof data === 'string' ? JSON.parse(data) : data;
 
                 if (!parsedData.nuevoOrden || !Array.isArray(parsedData.nuevoOrden)) {
@@ -97,8 +97,8 @@ export class SocketIOManager {
                     return;
                 }
                 try {
+                    console.log('Registrar orden de cartas');
                     await this.#juegoServicio.registrarOrdenCartas(parsedData.id, parsedData.nuevoOrden);
-
                 } catch (e) {
                     console.error(`Error al procesar ORDENAR_CARTAS para ${socket.id}: ${e.message}`);
                     socket.emit('ERROR', { mensaje: `Error al ordenar cartas: ${e.message}` });
@@ -109,7 +109,7 @@ export class SocketIOManager {
                 console.log(`Evento ENFRENTAR_CARTAS recibido del cliente (${socket.id})`);
                 try {
                     await this.#juegoServicio.enfrentarCartas();
-
+                    
                 } catch (e) {
                     console.error(`Error al procesar ENFRENTAR_CARTAS para ${socket.id}: ${e.message}`);
                     socket.emit('ERROR', { mensaje: `Error al enfrentar cartas: ${e.message}` });
@@ -127,30 +127,33 @@ export class SocketIOManager {
                 }
             });
 
+            socket.on('SALIR_SALA', async ({ idLeft }) => {
+                await this.#juegoServicio.echarJugadoresDeSala();
+            });
+
             // --- Escucha cuando un cliente se desconecta ---
             socket.on('disconnect', (reason) => {
                 console.log(`Cliente Socket.IO desconectado. ID: ${socket.id}. Razón: ${reason}`);
-
                 this.#juegoServicio.manejarDesconexionJugador(socket.id)
                     .catch(error => {
                         console.error(`Error al manejar la desconexión del jugador ${socket.id}:`, error);
                     });
             });
-
-
         });
-
-
     }
 
-
     #setupOyentesDelServicio() {
-
         this.#juegoServicio.on('estadoActualizado', (sala) => {
             console.log(`Evento 'estadoActualizado', ${sala.estado}, recibido de JuegoServicio para sala ID: ${sala.id}`);
             this.#io.emit('ESTADO_SALA_ACTUALIZADO', sala);
+        })
+        this.#juegoServicio.on('batallaRonda', (sala) =>
+        {
+            console.log('Emitir batalla sala, depende de front si ya están ambos o juegan');
+            this.#io.emit('BATALLA_RONDA', sala);
+        })
+        this.#juegoServicio.on('finDePartida', async () => {
+            this.#io.emit('FIN_DE_PARTIDA');
         });
-
-       
     }
 }

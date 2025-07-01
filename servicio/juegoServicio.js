@@ -30,8 +30,12 @@ class JuegoServicio extends EventEmitter {
 
   registrarOrdenCartas = async (id, nuevoOrden) => {
     const resultado = await ordenarCartas(this.#sala, id, nuevoOrden, this.#persistencia)
-    this.#emitirEstadoActualizado()
-    return resultado
+    
+    if (this.#sala.estado === 'cartas-ordenadas') {
+        await this.enfrentarCartas(); // Esto actualizará sala y emitirá estado
+    }
+    this.#emitirBatallaRonda();
+    return resultado;
   }
 
   enfrentarCartas= async () => {
@@ -40,7 +44,7 @@ class JuegoServicio extends EventEmitter {
     }
 
     const resultado = await enfrentarCartas(this.#sala, this.#persistencia)
-    this.#emitirEstadoActualizado()
+    //this.#emitirEstadoActualizado()
     return resultado
   }
 
@@ -58,12 +62,42 @@ class JuegoServicio extends EventEmitter {
     return this.#sala
   }
 
+  async echarJugadoresDeSala() {
+    this.#emitirEcharJugadores();
+    const sala = await this.#persistencia.reiniciarSala();
+    this.#sala = await this.#persistencia.cargarSala();
+    this.#emitirEstadoActualizado();
+  }
+
+  #emitirFinPartida() //Para enviar señal de que se terminó la partida al jugador que queda
+  {
+    this.emit('finDePartida', this.#sala);
+    console.log(`JuegoServicio emitió 'finDePartida'.`);
+  }
+
+  #emitirBatallaRonda()
+  {
+    this.emit('batallaRonda', this.#sala);
+  }
+
+  #emitirEcharJugadores()
+  {
+    this.emit('finDePartida');
+  }
+
   //metodo modularizado para emitir el estado
   #emitirEstadoActualizado() {
 
     this.emit('estadoActualizado', this.#sala);
     console.log(`JuegoServicio emitió 'estadoActualizado'. Estado actual: ${this.#sala.estado}`);
+  }  
+
+  async reiniciarSala() {
+  if (await this.#persistencia.reiniciarSala()) {
+    this.#sala = await this.#persistencia.cargarSala();
+    this.#emitirFinPartida();
   }
+}
 
   async manejarDesconexionJugador(disconnectedSocketId) {
     const jugadorDesconectado = this.#sala.jugadores.find(j => j.socketId === disconnectedSocketId);
@@ -95,9 +129,8 @@ class JuegoServicio extends EventEmitter {
       }
       this.#sala.jugadores = this.#sala.jugadores.filter(j => j.id !== jugadorDesconectado.id);
       console.log(`Jugador ${jugadorDesconectado.usuario} removido de la sala.`);
-
-      await this.#persistencia.guardarSala(this.#sala);
-      this.#emitirEstadoActualizado();
+      await this.#persistencia.reiniciarSala(this.#sala);
+      this.#emitirFinPartida();
     } else {
       console.log(`Socket ID ${disconnectedSocketId} desconectado, pero no corresponde a un jugador activo en la sala.`);
     }
