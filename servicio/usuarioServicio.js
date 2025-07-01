@@ -1,100 +1,130 @@
-import ModelFactory from '../model/DAO/factory.js'
-import { validar, validarActualizacion } from './validaciones/usuarios.js'
-import config from '../config.js'
-import jwt from 'jsonwebtoken'
-
+import ModelFactory from "../model/DAO/factory.js";
+import { validar, validarActualizacion } from "./validaciones/usuarios.js";
+import config from "../config.js";
+import jwt from "jsonwebtoken";
 
 class Servicio {
-   
-    #model
-     #persistenciaType
-    constructor(persistencia) {
-        this.#persistenciaType = persistencia;
-        this.#model = ModelFactory.get(persistencia, 'usuarios')
+  #model;
+  #persistenciaType;
+  constructor(persistencia) {
+    this.#persistenciaType = persistencia;
+    this.#model = ModelFactory.get(persistencia, "usuarios");
+  }
 
+  obtenerUsuarios = async (id) => {
+    if (id) {
+      const usuario = await this.#model.obtenerUsuario(id);
+      return usuario || {};
+    } else {
+      return await this.#model.obtenerUsuarios();
     }
+  };
 
-    obtenerUsuarios = async (id) => {
-        if (id) {
-            const usuario = await this.#model.obtenerUsuario(id)
-            return usuario || {}
-        }
-        else {
-            return await this.#model.obtenerUsuarios()
-        }
+  guardarUsuarios = async (usuario) => {
+    const val = validar(usuario);
+    if (val.result) {
+      const usuarioNuevo = await this.#model.guardarUsuarios(usuario);
+      return usuarioNuevo;
+    } else {
+      throw new Error(val.error.details[0].message);
     }
+  };
 
-    guardarUsuarios = async (usuario) => {   
-        
-        const val = validar(usuario)
-        if (val.result) {
-            const usuarioNuevo = await this.#model.guardarUsuarios(usuario)
-            return usuarioNuevo
-        }
-        else {
-            throw new Error(val.error.details[0].message)
-        }
+  actualizarUsuarios = async (id, usuario) => {
+    const val = validarActualizacion(usuario);
+    if (val.result) {
+      const usuarioActualizado = await this.#model.actualizarUsuarios(
+        id,
+        usuario
+      );
+      return usuarioActualizado;
+    } else {
+      throw new Error(val.error.details[0].message);
     }
+  };
 
-    actualizarUsuarios = async (id, usuario) => {
-        const val = validarActualizacion(usuario)
-        if (val.result) {
-            const usuarioActualizado = await this.#model.actualizarUsuarios(id, usuario)
-            return usuarioActualizado
-        }
-        else {
-            throw new Error(val.error.details[0].message)
-        }
-    }
+  borrarUsuarios = async (id) => {
+    const eliminado = await this.#model.borrarUsuarios(id);
 
-    borrarUsuarios = async (id) => {
-        const eliminado = await this.#model.borrarUsuarios(id)
+    return eliminado;
+  };
 
-        return eliminado
-    }
-loginUsuario = async (usuarioIngresado, contraseniaIngresada) => {
-    const usuarios = await this.#model.obtenerUsuarios()
-
-    const usuarioEncontrado = usuarios.find(u => u.usuario === usuarioIngresado)
+  obtenerNuevoToken = async (idPedido) => {
+    const usuarioEncontrado = await this.#model.obtenerUsuario(idPedido);
+    console.log('1 - Usuario encontrado: ',usuarioEncontrado);
 
     if (!usuarioEncontrado) {
-        throw new Error('Usuario no encontrado')
+      throw new Error("Usuario no encontrado");
+    }
+    //porque no encontraba el id en front si persisto en file
+    let userIdToSign;
+    // Determinar qué ID usar basado en el tipo de persistencia
+    if (this.#persistenciaType === "MONGODB") {
+      userIdToSign = usuarioEncontrado._id; // Para MongoDB, el ID es '_id'
+    } else if (this.#persistenciaType === "FILE") {
+      userIdToSign = usuarioEncontrado.id;
+    }
+    // EL TOKEN
+    const token = jwt.sign(
+      {
+        id: userIdToSign,
+        usuario: usuarioEncontrado.usuario,
+        email: usuarioEncontrado.email,
+        pfp: usuarioEncontrado.pfp,
+        wins: usuarioEncontrado.wins,
+        losses: usuarioEncontrado.losses,
+        draws: usuarioEncontrado.draws,
+      },
+      config.CLAVETOKEN,
+      { expiresIn: "1h" }
+    );
+    console.log('Devuelto nuevo token');
+    
+    return { token };
+  };
+  loginUsuario = async (usuarioIngresado, contraseniaIngresada) => {
+    const usuarios = await this.#model.obtenerUsuarios();
+
+    const usuarioEncontrado = usuarios.find(
+      (u) => u.usuario === usuarioIngresado
+    );
+
+    if (!usuarioEncontrado) {
+      throw new Error("Usuario no encontrado");
     }
 
     if (usuarioEncontrado.contrasenia !== contraseniaIngresada) {
-        throw new Error('Contraseña incorrecta')
+      throw new Error("Contraseña incorrecta");
     }
     //porque no encontraba el id en front si persisto en file
-let userIdToSign;
-        // Determinar qué ID usar basado en el tipo de persistencia
-        if (this.#persistenciaType === 'MONGODB') {
-            userIdToSign = usuarioEncontrado._id; // Para MongoDB, el ID es '_id'
-        } else if (this.#persistenciaType === 'FILE') {
-            userIdToSign = usuarioEncontrado.id;
-        }
+    let userIdToSign;
+    // Determinar qué ID usar basado en el tipo de persistencia
+    if (this.#persistenciaType === "MONGODB") {
+      userIdToSign = usuarioEncontrado._id; // Para MongoDB, el ID es '_id'
+    } else if (this.#persistenciaType === "FILE") {
+      userIdToSign = usuarioEncontrado.id;
+    }
     // EL TOKEN
 
     const token = jwt.sign(
-        {
-            id: userIdToSign,
-            usuario: usuarioEncontrado.usuario,
-            email: usuarioEncontrado.email,
-            pfp: usuarioEncontrado.pfp,
-            wins: usuarioEncontrado.wins,
-            losses: usuarioEncontrado.losses,
-            draws: usuarioEncontrado.draws
-        },
-        config.CLAVETOKEN,
-        { expiresIn: '1h' }
-    )
+      {
+        id: userIdToSign,
+        usuario: usuarioEncontrado.usuario,
+        email: usuarioEncontrado.email,
+        pfp: usuarioEncontrado.pfp,
+        wins: usuarioEncontrado.wins,
+        losses: usuarioEncontrado.losses,
+        draws: usuarioEncontrado.draws,
+      },
+      config.CLAVETOKEN,
+      { expiresIn: "1h" }
+    );
 
-    return { token }
-}
-actualizarEstadisticas = async (id, updates) => {
-        
-        return await this.#model.actualizarEstadisticas(id, updates);
-    }
-
+    return { token };
+  };
+  actualizarEstadisticas = async (id, updates) => {
+    return await this.#model.actualizarEstadisticas(id, updates);
+  };
 }
 
-export default Servicio
+export default Servicio;

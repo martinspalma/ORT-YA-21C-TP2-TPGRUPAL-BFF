@@ -13,7 +13,6 @@ class ModelMongoDBUsuarios {
 
     obtenerUsuario = async id => {
         if (!CnxMongoDB.connectionOK) throw new Error('ERROR CNX BASE DE DATOS!!!')
-
         const usuario = await UsuarioModel.findOne({ _id: id })
         return usuario
     }
