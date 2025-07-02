@@ -2,97 +2,33 @@
   "id": "sala-unica",
   "jugadores": [
     {
-      "id": "7",
+      "id": "68630363c6ea3f64e297a68e",
       "usuario": {
-        "id": "7",
+        "id": "68630363c6ea3f64e297a68e",
         "usuario": {
-          "id": "7",
-          "usuario": "Luisito",
-          "email": "l@gggggg.com",
-          "pfp": "https://lh3.googleusercontent.com/d/1CgbAHsBmh3G3eHUGz4e5vb5EE_4ymoKy",
+          "id": "68630363c6ea3f64e297a68e",
+          "usuario": "TestKyua",
+          "email": "test@chunva123.com",
+          "pfp": "https://lh3.googleusercontent.com/d/1NqxloduuGZUIeriMsaBFS2SoVoSggReZ",
           "wins": 0,
           "losses": 0,
           "draws": 0
         }
       },
-      "socketId": "x0SPaCeix6tGrnIXAAAB",
+      "socketId": "5u3WGJb9o2WFru1OAAAF",
       "cartas": [
         {
-          "id": 6,
-          "tipo": "tijera",
-          "pos_card": null
-        },
-        {
-          "id": 5,
+          "id": 3,
           "tipo": "piedra",
           "pos_card": null
         },
         {
-          "id": 2,
+          "id": 0,
           "tipo": "piedra",
           "pos_card": null
         },
         {
-          "id": 2,
-          "tipo": "piedra",
-          "pos_card": null
-        },
-        {
-          "id": 16,
-          "tipo": "papel",
-          "pos_card": null
-        },
-        {
-          "id": 1,
-          "tipo": "piedra",
-          "pos_card": null
-        },
-        {
-          "id": 6,
-          "tipo": "tijera",
-          "pos_card": null
-        },
-        {
-          "id": 4,
-          "tipo": "piedra",
-          "pos_card": null
-        },
-        {
-          "id": 12,
-          "tipo": "papel",
-          "pos_card": null
-        }
-      ],
-      "ordenadas": true
-    },
-    {
-      "id": "6",
-      "usuario": {
-        "id": "6",
-        "usuario": {
-          "id": "6",
-          "usuario": "Valentin",
-          "email": "valen@gggg.com",
-          "pfp": "https://lh3.googleusercontent.com/d/1ydlHT7r6CVDXg5c4Oe9iANmX350sEawy",
-          "wins": 0,
-          "losses": 0,
-          "draws": 0
-        }
-      },
-      "socketId": "vj0ooAJPD_77vDwZAAAD",
-      "cartas": [
-        {
-          "id": 6,
-          "tipo": "tijera",
-          "pos_card": null
-        },
-        {
-          "id": 16,
-          "tipo": "papel",
-          "pos_card": null
-        },
-        {
-          "id": 11,
+          "id": 7,
           "tipo": "tijera",
           "pos_card": null
         },
@@ -102,22 +38,22 @@
           "pos_card": null
         },
         {
-          "id": 11,
+          "id": 8,
           "tipo": "tijera",
           "pos_card": null
         },
         {
-          "id": 14,
-          "tipo": "papel",
-          "pos_card": null
-        },
-        {
-          "id": 1,
+          "id": 2,
           "tipo": "piedra",
           "pos_card": null
         },
         {
-          "id": 12,
+          "id": 17,
+          "tipo": "papel",
+          "pos_card": null
+        },
+        {
+          "id": 14,
           "tipo": "papel",
           "pos_card": null
         },
@@ -128,15 +64,79 @@
         }
       ],
       "ordenadas": true
+    },
+    {
+      "id": "685b448eee6a8bb20491731e",
+      "usuario": {
+        "id": "685b448eee6a8bb20491731e",
+        "usuario": {
+          "id": "685b448eee6a8bb20491731e",
+          "usuario": "Usuario2",
+          "email": "usu2@usu5.com",
+          "pfp": "https://lh3.googleusercontent.com/d/1B_D2HcOoihx6AbKtQ4lDoRCnYffSlT8x",
+          "wins": 0,
+          "losses": 0,
+          "draws": 0
+        }
+      },
+      "socketId": "ZnUkP8dMUo3pt22oAAAD",
+      "cartas": [
+        {
+          "id": 12,
+          "tipo": "papel",
+          "pos_card": null
+        },
+        {
+          "id": 5,
+          "tipo": "piedra",
+          "pos_card": null
+        },
+        {
+          "id": 3,
+          "tipo": "piedra",
+          "pos_card": null
+        },
+        {
+          "id": 14,
+          "tipo": "papel",
+          "pos_card": null
+        },
+        {
+          "id": 12,
+          "tipo": "papel",
+          "pos_card": null
+        },
+        {
+          "id": 7,
+          "tipo": "tijera",
+          "pos_card": null
+        },
+        {
+          "id": 14,
+          "tipo": "papel",
+          "pos_card": null
+        },
+        {
+          "id": 5,
+          "tipo": "piedra",
+          "pos_card": null
+        },
+        {
+          "id": 5,
+          "tipo": "piedra",
+          "pos_card": null
+        }
+      ],
+      "ordenadas": true
     }
   ],
   "comenzado": true,
   "ronda": 1,
   "finalizada": true,
   "resultado": {
-    "6": 7,
-    "7": 1
+    "68630363c6ea3f64e297a68e": 3,
+    "685b448eee6a8bb20491731e": 3
   },
   "estado": "partida-finalizada",
-  "ganador": "6"
+  "ganador": "empate"
 }

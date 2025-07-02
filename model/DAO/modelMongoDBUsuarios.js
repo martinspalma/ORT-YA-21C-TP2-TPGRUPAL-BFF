@@ -47,14 +47,14 @@ class ModelMongoDBUsuarios {
             );
 
             if (!updatedUser) {
-                console.warn(`[UsuarioServicio] Usuario con ID ${userId} no encontrado para actualizar estadísticas.`);
+                console.warn(`[UsuarioServicio] Usuario con ID ${id} no encontrado para actualizar estadísticas.`);
                 return null;
             }
-            console.log(`[UsuarioServicio] Estadísticas actualizadas para usuario ${userId}:`, updatedUser.wins, updatedUser.losses, updatedUser.draws);
+            console.log(`[UsuarioServicio] Estadísticas actualizadas para usuario ${id}:`, updatedUser.wins, updatedUser.losses, updatedUser.draws);
             return updatedUser;
 
         } catch (error) {
-            console.error(`[UsuarioServicio] Error al actualizar estadísticas del usuario ${userId}:`, error);
+            console.error(`[UsuarioServicio] Error al actualizar estadísticas del usuario ${id}:`, error);
             
         }
     }
