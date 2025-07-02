@@ -13,8 +13,8 @@ export const obtenerPaisPorIP = async(ip)=>{
         const {data} = await axios.get(`https://ipapi.co/${ip}/json/`) 
 
         return {
-            nombre: data.country_name,
-            codigo: data.country_code
+            nombre: data.country_name ?? "Argentina",
+            codigo: data.country_code ?? "AR" 
         }
     } catch (error) {
         console.error('Error al obtener país:', error.message)
