@@ -8,6 +8,7 @@ import { UsuarioRouter, CartaRouter, JuegoRouter } from './router/index.js'
 import JuegoServicio from './servicio/juegoServicio.js'
 import ModelFactory from './model/DAO/factory.js'
 import cors from 'cors'
+import UsuarioServicio from './servicio/usuarioServicio.js'
 
 
 class Server {
@@ -40,12 +41,19 @@ class Server {
       allowedHeaders: ['Content-Type', 'Authorization']
     }))
 
+// 1. INSTANCIAR EL SERVICIO DE USUARIOS PRIMERO por el contador de partidas
+this.usuarioPersistencia = ModelFactory.get(this.#persistenciaUsuarios, "usuarios");
+const usuarioServicio = new UsuarioServicio(this.usuarioPersistencia, this.#persistenciaUsuarios)
+
+
     // INSTANCIO ACA JUEGOSERVICIO PARA USAR EL SOCKET.IO------------
-    const juegoPersistencia = ModelFactory.get(this.#persistenciaJuego, 'juego');
+    
+    
+  const juegoPersistencia = ModelFactory.get(this.#persistenciaJuego, 'juego');
     const juegoServicio = new JuegoServicio(juegoPersistencia);
 
     //--------------API RESTful de Productos-------es lo que pone en uso la carpeta vista----------------
-    app.use('/api/usuarios', new UsuarioRouter(this.#persistenciaUsuarios).start())
+    app.use('/api/usuarios', new UsuarioRouter(usuarioServicio).start())
     app.use('/api/cartas', new CartaRouter(this.#persistenciaCartas).start())
     app.use('/api/juego', new JuegoRouter(juegoServicio).start())
 

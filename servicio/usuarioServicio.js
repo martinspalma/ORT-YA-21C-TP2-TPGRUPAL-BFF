@@ -6,9 +6,12 @@ import jwt from "jsonwebtoken";
 class Servicio {
   #model;
   #persistenciaType;
-  constructor(persistencia) {
-    this.#persistenciaType = persistencia;
-    this.#model = ModelFactory.get(persistencia, "usuarios");
+  
+  
+  constructor(persistencia, typePersistencia) {
+    this.#model = persistencia;
+    this.#persistenciaType=typePersistencia;
+    
   }
 
   obtenerUsuarios = async (id) => {

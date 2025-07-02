@@ -19,5 +19,27 @@
 		"fechaNac": "2025-04-02",
 		"contrasenia": "1234$$Gg",
 		"id": "5"
+	},
+	{
+		"usuario": "Valentin",
+		"email": "valen@gggg.com",
+		"fechaNac": "11/11/2000",
+		"contrasenia": "Vale$$44",
+		"wins": 0,
+		"losses": 0,
+		"draws": 0,
+		"pfp": "https://lh3.googleusercontent.com/d/1ydlHT7r6CVDXg5c4Oe9iANmX350sEawy",
+		"id": "6"
+	},
+	{
+		"usuario": "Luisito",
+		"email": "l@gggggg.com",
+		"fechaNac": "11/11/2000",
+		"contrasenia": "Lp$55555",
+		"wins": 0,
+		"losses": 0,
+		"draws": 0,
+		"pfp": "https://lh3.googleusercontent.com/d/1CgbAHsBmh3G3eHUGz4e5vb5EE_4ymoKy",
+		"id": "7"
 	}
 ]
