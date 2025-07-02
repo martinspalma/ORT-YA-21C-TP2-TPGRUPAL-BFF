@@ -5,7 +5,7 @@ class ModelFileUsuarios extends ArchivoPersistencia{
 
     constructor() {
 
-        super('./data/usuarios.json')
+        super('./data/usuarios.out')
     }
 
     obtenerUsuario = async (id) => {

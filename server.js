@@ -69,7 +69,7 @@ const usuarioServicio = new UsuarioServicio(this.usuarioPersistencia, this.#pers
   
 //----------instancio SocketIOManager--------------
 
-this.#socketIOManager = new SocketIOManager(this.#io, juegoServicio)
+this.#socketIOManager = new SocketIOManager(this.#io, juegoServicio, usuarioServicio)
 
 //------------------ SECTOR LISTEN--------------------------
 server.listen(this.#port, () => {

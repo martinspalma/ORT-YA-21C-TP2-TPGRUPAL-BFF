@@ -3,11 +3,12 @@ import { obtenerPaisPorIP } from "../util/geolocalizacion.js";
 export class SocketIOManager {
     #io;
     #juegoServicio;
+    #usuarioServicio;
 
-    constructor(ioServer, juegoServicio) {
+    constructor(ioServer, juegoServicio, usuarioServicio) {
         this.#io = ioServer;
         this.#juegoServicio = juegoServicio;
-        
+        this.#usuarioServicio = usuarioServicio;
         // Configura los listeners para el servidor Socket.IO
         this.#setupSocketIOListeners();
         this.#setupOyentesDelServicio();
@@ -21,6 +22,10 @@ export class SocketIOManager {
             console.log(`Nuevo Cliente Socket.IO conectado. ID: ${socket.id}. Total conectados: ${this.#io.engine.clientsCount}`);
 
             const ip = socket.handshake.address;
+            console.log('-1 socket: ' , socket.handshake);
+            
+            console.log('0-IP recibido del socket: ', ip);
+            
             socket.ip = ip;
 
             try {
@@ -147,10 +152,31 @@ export class SocketIOManager {
             console.log(`Evento 'estadoActualizado', ${sala.estado}, recibido de JuegoServicio para sala ID: ${sala.id}`);
             this.#io.emit('ESTADO_SALA_ACTUALIZADO', sala);
         })
-        this.#juegoServicio.on('batallaRonda', (sala) =>
+        this.#juegoServicio.on('batallaRonda', async (sala) =>
         {
             console.log('Emitir batalla sala, depende de front si ya están ambos o juegan');
             this.#io.emit('BATALLA_RONDA', sala);
+            if(sala.estado == 'partida-finalizada') //Mover este IF al llamado correspondiente de fin de partida luego en la limpieza
+            {
+                //Partida terminó
+                console.log('Partida terminada: ', sala);
+                if(sala.estado != "empate")
+                {
+                    const idGanador = sala.ganador == sala.jugadores[0].id ? sala.jugadores[0].id : sala.jugadores[1].id
+                    const idPerdedor = idGanador == sala.jugadores[0].id ? sala.jugadores[1].id : sala.jugadores[0].id
+                    console.log('ID ganador', idGanador);
+                    console.log('ID perdedor', idPerdedor); 
+                    await this.#usuarioServicio.actualizarEstadisticas(idPerdedor, {losses: 1})
+                    await this.#usuarioServicio.actualizarEstadisticas(idGanador, {wins: 1})
+                }
+                else
+                {
+                    const idU1 = sala.jugadores[0].id;
+                    const idU2 = sala.jugadores[1].id;
+                    await this.#usuarioServicio.actualizarEstadisticas(idU1, {draws: 1})
+                    await this.#usuarioServicio.actualizarEstadisticas(idU2, {draws: 1})
+                }
+            }
         })
         this.#juegoServicio.on('finDePartida', async () => {
             this.#io.emit('FIN_DE_PARTIDA');
