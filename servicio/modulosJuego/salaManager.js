@@ -1,5 +1,7 @@
-export async function inicializarSala(persistencia) {
-  let sala = await persistencia.cargarSala()
+export async function inicializarSala(persistencia, constructor ) { //Constructor es true o false
+  //para saber si es cuando se inicia el servidor o no.
+  let sala;
+  if(!constructor) sala = await persistencia.cargarSala()
   if (!sala) {
     sala = {
       id: 'sala-unica',

@@ -19,7 +19,7 @@ class JuegoServicio extends EventEmitter {
   }
 
   init = async () => {
-    this.#sala = await inicializarSala(this.#persistencia)
+    this.#sala = await inicializarSala(this.#persistencia, true)
     this.#emitirEstadoActualizado()
   }
 
