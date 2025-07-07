@@ -14,7 +14,6 @@ class UsuarioRouter {
         //POST
         router.post('/', this.#cb.guardarUsuarios)
         router.post('/login', this.#cb.loginUsuario)
-        router.post('/getnewtoken', this.#cb.obtenerNuevoToken)
         //PUT
         router.put('/:id', this.#cb.actualizarUsuarios)
         //DELETE

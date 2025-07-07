@@ -5,6 +5,5 @@
   "ronda": 1,
   "finalizada": false,
   "resultado": null,
-  "estado": "esperando-jugadores",
-  "ganador": null
+  "estado": "esperando-jugadores"
 }

@@ -50,21 +50,6 @@ class Controlador {
         }
     }
 
-    obtenerNuevoToken = async(req, res)=>
-    {
-        console.log("0 - obtenerNuevoToken");
-        
-        try {
-            const { id } = req.body
-            console.log('3 - ID pedido: ', id);
-            const usuarioAutenticado = await this.#servicio.obtenerNuevoToken(id)
-            console.log("2 - usuario autentificado nuevo: ", usuarioAutenticado);
-            res.json(usuarioAutenticado)
-        } catch (error) {
-            res.status(401).json({ error: error.message })
-        }
-    }
-
 
 porError = (req, res) => {
     const { url: ruta, method: metodo } = req

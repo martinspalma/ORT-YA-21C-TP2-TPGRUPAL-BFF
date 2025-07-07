@@ -40,7 +40,20 @@ class Servicio {
         id,
         usuario
       );
-      return usuarioActualizado;
+
+      const token = jwt.sign(
+      {
+        id: usuarioActualizado.id,
+        usuario: usuarioActualizado.usuario,
+        email: usuarioActualizado.email,
+        pfp: usuarioActualizado.pfp,
+        wins: usuarioActualizado.wins,
+        losses: usuarioActualizado.losses,
+        draws: usuarioActualizado.draws,
+      }, config.CLAVETOKEN)
+
+      return { token };
+      //return usuarioActualizado;
     } else {
       throw new Error(val.error.details[0].message);
     }
@@ -52,39 +65,6 @@ class Servicio {
     return eliminado;
   };
 
-  obtenerNuevoToken = async (idPedido) => {
-    const usuarioEncontrado = await this.#model.obtenerUsuario(idPedido);
-    console.log('1 - Usuario encontrado: ',usuarioEncontrado);
-
-    if (!usuarioEncontrado) {
-      throw new Error("Usuario no encontrado");
-    }
-    //porque no encontraba el id en front si persisto en file
-    let userIdToSign;
-    // Determinar qué ID usar basado en el tipo de persistencia
-    if (this.#persistenciaType === "MONGODB") {
-      userIdToSign = usuarioEncontrado._id; // Para MongoDB, el ID es '_id'
-    } else if (this.#persistenciaType === "FILE") {
-      userIdToSign = usuarioEncontrado.id;
-    }
-    // EL TOKEN
-    const token = jwt.sign(
-      {
-        id: userIdToSign,
-        usuario: usuarioEncontrado.usuario,
-        email: usuarioEncontrado.email,
-        pfp: usuarioEncontrado.pfp,
-        wins: usuarioEncontrado.wins,
-        losses: usuarioEncontrado.losses,
-        draws: usuarioEncontrado.draws,
-      },
-      config.CLAVETOKEN,
-      { expiresIn: "1h" }
-    );
-    console.log('Devuelto nuevo token');
-    
-    return { token };
-  };
   loginUsuario = async (usuarioIngresado, contraseniaIngresada) => {
     const usuarios = await this.#model.obtenerUsuarios();
 
@@ -108,7 +88,6 @@ class Servicio {
       userIdToSign = usuarioEncontrado.id;
     }
     // EL TOKEN
-
     const token = jwt.sign(
       {
         id: userIdToSign,
@@ -120,7 +99,7 @@ class Servicio {
         draws: usuarioEncontrado.draws,
       },
       config.CLAVETOKEN,
-      { expiresIn: "1h" }
+      //{ expiresIn: "1h" }
     );
 
     return { token };
