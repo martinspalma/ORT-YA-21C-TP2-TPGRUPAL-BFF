@@ -1,45 +1,28 @@
 [
 	{
-		"usuario": "luciano",
-		"email": "lp@yahoo.com",
-		"fechaNac": "2025-05-06",
-		"contrasenia": "4456Lp&&",
-		"id": "3"
-	},
-	{
-		"usuario": "Matilda",
-		"email": "matildita@gmail.com",
-		"fechaNac": "2019-06-04",
-		"contrasenia": "4456Lp&&",
-		"id": "4"
-	},
-	{
-		"usuario": "ignacio",
-		"email": "ig@hotmail.com",
-		"fechaNac": "2025-04-02",
-		"contrasenia": "1234$$Gg",
-		"id": "5"
-	},
-	{
-		"usuario": "Valentin",
-		"email": "valen@gggg.com",
+		"usuario": "ValentinGeo",
+		"email": "vv@qq.com",
 		"fechaNac": "11/11/2000",
-		"contrasenia": "Vale$$44",
-		"wins": 5,
-		"losses": 3,
+		"contrasenia": "Valentin$4",
+		"wins": 0,
+		"losses": 0,
 		"draws": 0,
-		"pfp": "https://lh3.googleusercontent.com/d/1ydlHT7r6CVDXg5c4Oe9iANmX350sEawy",
-		"id": "6"
+		"pfp": "https://lh3.googleusercontent.com/d/1NqxloduuGZUIeriMsaBFS2SoVoSggReZ",
+		"pais": "Argentina",
+		"codigoPais": "AR",
+		"id": "1"
 	},
 	{
-		"usuario": "Luisito",
-		"email": "l@gggggg.com",
+		"usuario": "Tomas",
+		"email": "tt@qq.com",
 		"fechaNac": "11/11/2000",
-		"contrasenia": "Lp$55555",
-		"wins": 5,
-		"losses": 4,
+		"contrasenia": "Toto$$44",
+		"wins": 0,
+		"losses": 0,
 		"draws": 0,
-		"pfp": "https://lh3.googleusercontent.com/d/1CgbAHsBmh3G3eHUGz4e5vb5EE_4ymoKy",
-		"id": "7"
+		"pfp": "https://lh3.googleusercontent.com/d/1B_D2HcOoihx6AbKtQ4lDoRCnYffSlT8x",
+		"pais": "Argentina",
+		"codigoPais": "AR",
+		"id": "2"
 	}
 ]

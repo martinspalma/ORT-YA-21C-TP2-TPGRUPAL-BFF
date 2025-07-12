@@ -13,7 +13,9 @@ export const validar = (usuario) => {
         wins: Joi.number().integer().min(0).default(0),
         losses: Joi.number().integer().min(0).default(0),
         draws: Joi.number().integer().min(0).default(0),
-        pfp: Joi.string().optional().allow(null, '')
+        pfp: Joi.string().optional().allow(null, ''),
+        pais: Joi.string().optional().allow('', null),
+        codigoPais: Joi.string().length(2).optional().allow('', null)
     })
     const { error } = usuarioEsquema.validate(usuario)
     if (error) {
@@ -35,7 +37,9 @@ export const validarActualizacion = (usuario) => {
         wins: Joi.number().integer().min(0).optional(),
         losses: Joi.number().integer().min(0).optional(),
         draws: Joi.number().integer().min(0).optional(),
-        pfp: Joi.string().optional()
+        pfp: Joi.string().optional(),
+        pais: Joi.string().optional().allow('', null),
+        codigoPais: Joi.string().length(2).optional().allow('', null)
     }).min(1);
 
     const { error } = usuarioEsquema.validate(usuario)

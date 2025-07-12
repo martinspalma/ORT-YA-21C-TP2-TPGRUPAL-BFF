@@ -50,7 +50,11 @@ class Servicio {
         wins: usuarioActualizado.wins,
         losses: usuarioActualizado.losses,
         draws: usuarioActualizado.draws,
+        pais: usuarioActualizado.pais,
+        codigoPais: usuarioActualizado.codigoPais,
+       
       }, config.CLAVETOKEN)
+       console.log(usuario);
 
       return { token };
       //return usuarioActualizado;
@@ -97,6 +101,8 @@ class Servicio {
         wins: usuarioEncontrado.wins,
         losses: usuarioEncontrado.losses,
         draws: usuarioEncontrado.draws,
+        pais: usuarioEncontrado.pais,
+        codigoPais: usuarioEncontrado.codigoPais,
       },
       config.CLAVETOKEN,
       //{ expiresIn: "1h" }

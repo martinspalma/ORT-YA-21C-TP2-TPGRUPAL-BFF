@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export const obtenerPaisPorIP = async(ip)=>{
-    console.log('1 - IP recibido: ', ip);
+    //console.log('1 - IP recibido: ', ip);
     
     if (ip.startsWith('::ffff:')) {
         ip = ip.split(':').pop()
-        console.log('2- IP resultante: ', ip);
+        //console.log('2- IP resultante: ', ip);
     }
     
     try {

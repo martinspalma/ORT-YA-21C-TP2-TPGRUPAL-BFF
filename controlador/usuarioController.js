@@ -1,5 +1,5 @@
 import Servicio from '../servicio/usuarioServicio.js'
-
+import { obtenerPaisPorIP } from '../util/geolocalizacion.js'
 
 class Controlador {
     #servicio
@@ -16,6 +16,11 @@ class Controlador {
     guardarUsuarios = async (req, res) => {
         try {
             const usuario = req.body
+            const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.connection.remoteAddress
+            const pais = await obtenerPaisPorIP(ip)
+            usuario.pais = pais.nombre;
+            usuario.codigoPais = pais.codigo;
+    //console.log(`[usuarioController] País detectado:`, pais)
             const usuarioGuardado = await this.#servicio.guardarUsuarios(usuario)
             res.json(usuarioGuardado)
         } catch (error) {
